@@ -10,3 +10,4 @@ Codul trebuie sa respecte principiul SOLID.
 
 In prima saptamana framework design si 1 componenta implementata.
 Dupa asta, cate 2 componente pe saptamana.
+test
