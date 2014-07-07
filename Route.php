@@ -3,18 +3,18 @@
 		
 		//constructors
 		public function __construct($controller, $action, $params){
-			isset($name) ? $this->setControllerName($name) : '';
-			isset($action) ? $this->setActionName($name) : '';
-			isset($params) && is_array($params) ? $this->setParams($name) : '';
+			isset($controller) ? $this->setControllerName($controller) : '';
+			isset($action) ? $this->setActionName($action) : '';
+			isset($params) && is_array($params) ? $this->setParams($params) : '';
 		}
 		
 		public function __construct($controller, $action){
-			isset($name) ? $this->setControllerName($name) : '';
-			isset($action) ? $this->setActionName($name) : '';
+			isset($controller) ? $this->setControllerName($controller) : '';
+			isset($action) ? $this->setActionName($action) : '';
 		}
 		
 		public function __construct($controller){
-			isset($name) ? $this->setControllerName($name) : '';
+			isset($name) ? $this->setControllerName($controller) : '';
 		}
 		
 		public function __construct(){}

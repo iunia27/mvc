@@ -4,19 +4,20 @@
 	class RouterBuilder{
 		
 		private static $default_controller = 'Home';
-		private static $default_action;
+		private static $default_action = 'Index';
 		private static $default_params;
 		
 		public function __construct(){}
 		
 		public function createRoute($url){
 			if (isset($url)){
-				$route_values = explode('/', $url);
+				$parsed_url = parse_url($url);
+				$route_values = explode('/', $parsed_url['path']);
 				if (isset($route_values) && is_array($route_values)){
 					$route_count = count($route_values);
 					$controller = $route_values[1];
-					$action = $this->setAction();
-					$params = $this->setParameters();
+					$action = $this->getAction();
+					$params = $this->getParameters();
 					return new Route($controller, $action, $params);
 				}
 			}
