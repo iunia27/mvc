@@ -22,26 +22,7 @@
 		public static function run($path){
 		
 		}
-		
-		//sets the default action name
-		public function setDefaultActionName($actionName){
-			$this->$defaultAction = 'test2';
-		}
-		
-		//sets the default controller name
-		public function setDefaultControllerName($actionName){
-			$this->$defaultController = 'test2';
-		}
-		//gets the default action name
-		public function getDefaultActionName(){
-			return $this->$defaultAction;
-		}
-		
-		//gets the default controller name
-		public function getDefaultControllerName(){
-			$this->$defaultController;
-		}
-		
+
 		//builds the route
 		public function dispatch(){
 		
