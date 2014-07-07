@@ -1,6 +1,7 @@
 <?php 
 	class Route{
 		
+		//constructors
 		public function __construct($controller, $action, $params){
 			isset($name) ? $this->setControllerName($name) : '';
 			isset($action) ? $this->setActionName($name) : '';
@@ -18,10 +19,12 @@
 		
 		public function __construct(){}
 	
+		//properties declaration
 		private $controllerName;
 		private $actionName;
 		private $params;
 		
+		//seters and geters for each property
 		public function setControllerName($name){
 			if (isset($name)){
 				$this->$controllerName = $name;

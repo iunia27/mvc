@@ -42,7 +42,7 @@
 			$this->$defaultController;
 		}
 		
-		//gets the default controller name
+		//builds the route
 		public function dispatch(){
 		
 		}
