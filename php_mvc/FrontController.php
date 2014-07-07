@@ -1,26 +1,19 @@
 <?php
 	include_once 'Singleton.php';
-	include_once 'RouteBuilder.php';
+	include_once 'Route.php';
 
 	$frontController = FrontController :: getInstance();
 	$frontController->dispatch();
 	
 	class FrontController extends Singleton {
-		private $controller_directory = 'Controllers';
-		
-		//Set several module directories (xml file)
-		public function setControllerDirectory($controllerName, $controllerDirectory){
-			// sets the controller directory path
-		}
-		
-		//add a new module directory in an xml file. 
-		public function addControllerDirectory($directory){
-			
+		private $route;
+		public function __construct(){
+			$route = new Route($_SERVER['REQUEST_URI'], $_SERVER['REQUEST_METHOD']);
 		}
 		
 		//gets the directory of the controller based on controller Name (xml file)
-		public function getControllerDirectory($controllerName){
-			return $this->$controller_directory;
+		public function getControllerDirectory($controller){
+			return $this->$route->getDirectoryFolder($controller);
 		}
 		//a static method taking simply a path to a directory containing controllers. It fetches a front controller instance (via getInstance(), 
 		//registers the path provided via setControllerDirectory(), and finally dispatches
@@ -29,16 +22,14 @@
 		}
 
 		// checks for registered router and dispatcher objects, instantiating the default versions of each if none is found
-		public function dispatch(){
-			//Routing
-			$router = new RouteBuilder();
-			$route = $router->createRoute();
-			
+		public function dispatch(){			
 			//Dispatching
-			$dir = getControllerDirectory($route[0]);
+			$dir = getControllerDirectory($route->getControllerName());
+			include $dir;
 				//some more code for including the controllers file in the front controller .php page
-			$controller_instance = $route[0]::getInstance(); //instance of the required controller
-			$function = $route[1];
+			$controller = $route->getControllerName();
+			$action = $route->getActionName();
+			$controller_instance = $controller :: getInstance(); //instance of the required controller
 			$params = 1; //some model binder 
 			
 			//Response
