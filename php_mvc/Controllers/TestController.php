@@ -4,7 +4,7 @@
 		private $variable = 'Name';
 		
 		public function Index(){
-			return $variable;
+			return $this->variable;
 		}
 	}
 
