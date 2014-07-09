@@ -1,5 +1,5 @@
 <?php
-	include_once '../Route.php';
+	include_once '../Router.php';
 	include_once '../CustomInject.php';
 	include_once '../DIReflection.php';
 	
@@ -12,9 +12,6 @@
 		private static $instance = null;
 
 		private function __construct(){ //Thou shalt not construct that which is unconstructable!
-			/*$container = CustomInject :: getInstance();
-			$this->itest = $container :: resolve('ITest');
-			var_dump($this->itest->show());*/
 		}
 
 		private function __clone(){} //Me not like clones! Me smash clones!
@@ -28,14 +25,14 @@
 		}		
 				
 		public function run(){
-			$this->route = new Route();
+			$this->route = new Router($_SERVER['REQUEST_URI'], $_SERVER['REQUEST_METHOD']);
 			$this->dispatch();
 		}
 
 		// checks for registered router and dispatcher objects, instantiating the default versions of each if none is found
 		private function dispatch(){			
-			$controller = 'TestController';//$this->route->getControllerName();
-			$action = 'Index';//$this->route->getActionName();
+			$controller = ucfirst($this->route->getControllerName().'Controller');
+			$action = ucfirst($this->route->getActionName());
 			
 			$this->__autoload($controller);
 			
