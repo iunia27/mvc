@@ -5,11 +5,11 @@ include_once("RouterInterface.php");
 class Router implements RouterInterface {
 
     //properties declaration
-    private $schema;
-    private $controllerName;
-    private $actionName;
+    private $schema = null;
+    private $controllerName = null;
+    private $actionName = null;
     private $params = array();
-    private $requestType;
+    private $requestType = null;
 
     //constructors
     public function __construct($url, $requestType) {
@@ -25,7 +25,10 @@ class Router implements RouterInterface {
     private function createRoute($url) {
         if (isset($url)) {
             $parsed_url = parse_url($url);
+            if (isset($parsed_url['scheme'])){
             $this->setSchema($parsed_url['scheme']);
+            }
+            if (isset($parsed_url['query'])){
             $get_params = explode('&', $parsed_url['query']);
             $params = array();
             foreach ($get_params as $get_param) {
@@ -39,6 +42,7 @@ class Router implements RouterInterface {
                 }
             }
             $this->setParams($params);
+        }
         }
     }
 
