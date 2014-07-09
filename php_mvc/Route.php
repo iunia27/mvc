@@ -13,8 +13,6 @@
 		
 		//constructors
 		public function __construct($url, $requestType){
-			$this->requestType = $requestType;
-			$routes = array('test' => 'TestController.php');
 			$this->createRoute($url);
 		}
 		
