@@ -1,9 +1,4 @@
-<?php
-	function __autoload() {
-		$filename = "./".$controllerName.".php";
-		include_once($filename);
-	}
-	
+<?php	
 	class DIReflexion{
 	
 		private $controllerName;
@@ -40,6 +35,10 @@
 				return $this->instClass->getConstructor()->getParameters();
 			}
 		}
-	
+		
+		private function __autoload($controllerName) {
+			$filename = "./".$controllerName.".php";
+			include_once($filename);
+		}
 	}
 ?>
