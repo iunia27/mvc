@@ -63,8 +63,6 @@ class Router implements RouterInterface {
             }
             $this->setParams($_POST['params']);
         }
-        var_dump($this);
-        exit;
     }
 
     //seters and geters for each property
