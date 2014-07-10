@@ -34,20 +34,20 @@
 			$controller = ucfirst($this->route->getControllerName().'Controller');
 			$action = ucfirst($this->route->getActionName());
 			
-			$this->__autoload($controller);
+			$cont = $this->getControllerContext($controller);
 			
 			//Response
-			$response = $controllerContext->$action();
+			$response = $cont->$action();
 			echo $response;
 		}
 		
-		private function __autoload($controllerName)
+		private function getControllerContext($controllerName)
 		{
 			$filename = "./". $controllerName .".php";
 			include_once($filename);
 			
 			$ex = new DIReflexion($controllerName);
-			$this->controllerContext = $ex->getControllerContext();
+			return $ex->getControllerContext();
 		}
 	}
 	

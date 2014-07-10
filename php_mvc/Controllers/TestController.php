@@ -9,7 +9,7 @@
 		}
 		
 		public function Index(){
-			$methodCalled = $this->itest->show().' + '.$this->variable;
+			$methodCalled = $this->itest->show()." + ".$this->variable." + </br> This was made using dependency injection";
 			return $methodCalled;
 		}
 	}

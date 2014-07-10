@@ -8,7 +8,7 @@
 
 		private function __construct(){
 			$this :: register('ITest', function() {
-				return new Test();;
+				return new Test();
 			});
 		}
 
