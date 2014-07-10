@@ -23,6 +23,7 @@ class Router implements RouterInterface {
      * param1="param1"&...&paramN="paramN"
      */
     private function createRoute() {
+        global $config;
         $method = $_SERVER['REQUEST_METHOD'];  //get the request method (get/post)
         $this->setRequestType($method);        //set the request method 
         (isset($_SERVER['HTTPS'])) ? $this->setSchema('https') : $this->setSchema('http');
