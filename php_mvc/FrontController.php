@@ -1,11 +1,11 @@
 <?php
 	include_once 'Singleton.php';
-	include_once 'Route.php';
+	include_once 'Router.php';
 	
 	class FrontController extends Singleton {
 		private $route;
 		public function __construct(){
-			$this->route = new Route($_SERVER['REQUEST_URI'], $_SERVER['REQUEST_METHOD']);
+			$this->route = new Router();
 		}
 		
 		//gets the directory of the controller based on controller Name (xml file)
