@@ -1,39 +1,43 @@
 <?php	
+	include_once 'Test.php';
+	include_once 'DBConnector.php';
+	include_once 'DBService.php';
+	include_once 'ITest.php';
+	include_once 'IDBConnector.php';
+	include_once 'IDBService.php';
+	
 	class DIReflexion{
 	
-		private $controllerName;
-		private $instClass;
-		
-		public function __construct($controllerName){
-			$this->controllerName = $controllerName;
-			$this->instClass = new ReflectionClass($this->controllerName);
-			
+		public function __construct(){
 		}
+		/**retrieves controller/service instance based on its dependencies.
+		* $controller -> a variable that stores the name of the class that should be instanced.
+		* returns the required service with all its dependencies based on dependency injection tool.
+		*/
+		public function getControllerContext($controllerName){
+			$params;
+			$instClass = new ReflectionClass($controllerName);
+			if ($instClass->isInstantiable()){
+				$params = $instClass->getConstructor()->getParameters();
+			}
 		
-		public function getControllerContext(){
-			$params = $this->getConstructorParams();
-			$paramsToSent = array();
+			$paramsForInstance = array();
 			foreach($params as $current)
 			{
+				
 				if (isset($current->getClass()->name)){
-					$classToIns = $current->getClass()->name;
-					$container = CustomInject :: getInstance();
-					$instance = $container->resolve($classToIns);
-					array_push($paramsToSent, $instance);
-				}
-				else{
-					array_push($paramsToSent, '');
+					$interfaceToInstanciate = $current->getClass()->name; //get the name of the interface that should be instantiated
+					$concreteInterface = $this->getConcreteClass($interfaceToInstanciate); //gets the name of the class that implements the interface
+					$instance = $this->getControllerContext($concreteInterface);
+					array_push($paramsForInstance, $instance);
 				}
 			}
-			$instance = $this->instClass->newInstanceArgs($paramsToSent);
-			return $instance;
+			$controllerInstance = $instClass->newInstanceArgs($paramsForInstance);
+			return $controllerInstance;
 		}
 		
-		public function getConstructorParams(){
-			$this->__autoload($this->controllerName);
-			if ($this->instClass->isInstantiable()){
-				return $this->instClass->getConstructor()->getParameters();
-			}
+		private function getConcreteClass($interfaceName){
+			return substr($interfaceName, 1);
 		}
 		
 		private function __autoload($controllerName) {

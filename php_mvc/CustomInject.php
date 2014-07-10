@@ -1,6 +1,7 @@
 <?php
 	include_once 'ICustomInject.php';
 	include_once 'Test.php';
+	include_once 'DBConnector.php';
 	
 	class CustomInject implements ICustomInject{
 		//singleton
@@ -9,6 +10,10 @@
 		private function __construct(){
 			$this :: register('ITest', function() {
 				return new Test();
+			});
+			
+			$this :: register('IDBConnector', function() {
+				return new DBConnector();
 			});
 		}
 

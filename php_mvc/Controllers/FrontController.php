@@ -34,9 +34,12 @@
 			$controller = ucfirst($this->route->getControllerName().'Controller');
 			$action = ucfirst($this->route->getActionName());
 			
+			echo 'First: Injecting the dependencies through the dependency injection service<br/><br/><br/>';
+			
 			$cont = $this->getControllerContext($controller);
 			
 			//Response
+			echo 'Second: The '.$controller.', action '.$action.'is invoked.<br/><br/><br/>';
 			$response = $cont->$action();
 			echo $response;
 		}
@@ -46,8 +49,8 @@
 			$filename = "./". $controllerName .".php";
 			include_once($filename);
 			
-			$ex = new DIReflexion($controllerName);
-			return $ex->getControllerContext();
+			$ex = new DIReflexion();
+			return $ex->getControllerContext($controllerName);
 		}
 	}
 	
