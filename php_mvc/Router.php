@@ -1,5 +1,6 @@
 <?php
 
+include_once("config.php");
 include_once("RouterInterface.php");
 
 class Router implements RouterInterface {
@@ -12,9 +13,8 @@ class Router implements RouterInterface {
     private $requestType = null;
 
     //constructors
-    public function __construct($url, $requestType) {
-        $this->requestType = $requestType;
-        $this->createRoute($url);
+    public function __construct() {
+        $this->createRoute();
     }
 
     /**
@@ -22,27 +22,46 @@ class Router implements RouterInterface {
      * http(s)://www.index.com?controller="controllerName"&action="actionName"&
      * param1="param1"&...&paramN="paramN"
      */
-    private function createRoute($url) {
-        if (isset($url)) {
-            $parsed_url = parse_url($url);
-            if (isset($parsed_url['scheme'])){
-            $this->setSchema($parsed_url['scheme']);
-            }
-            if (isset($parsed_url['query'])){
-            $get_params = explode('&', $parsed_url['query']);
+    private function createRoute() {
+        global $config;
+        $method = $_SERVER['REQUEST_METHOD'];  //get the request method (get/post)
+        $this->setRequestType($method);        //set the request method 
+        (isset($_SERVER['HTTPS'])) ? $this->setSchema('https') : $this->setSchema('http');
+
+        if ($method == 'GET') {
             $params = array();
-            foreach ($get_params as $get_param) {
-                $param = explode('=', $get_param);
-                if ($param[0] == 'controller') {
-                    $this->setControllerName($param[1]);
-                } elseif ($param[0] == 'action') {
-                    $this->setActionName($param[1]);
-                }else{
-                 $params[$param[0]]=$param[1];   
+            foreach ($_GET as $key => $value) {
+                switch ($key) {
+                    case 'schema':
+                        break;
+                    case 'controller':
+                        $this->setControllerName($value);
+                        break;
+                    case 'action':
+                        $this->setActionName($value);
+                        break;
+                    case 'requestType':
+                        break;
+                    default:
+                        $params[$key] = $value;
                 }
             }
             $this->setParams($params);
-        }
+
+            if (!isset($_GET['controller'])) {
+                $this->setControllerName($config['defaultController']);
+            }
+            if (!isset($_GET['action'])) {
+                $this->setActionName($config['defaultAction']);
+            }
+        } else if ($method == 'POST') {
+            $params = array();
+            foreach ($_POST as $key => $value) {
+                if (($key != 'controller') & ($key != 'action') & ($key != 'schema') & ($key != 'method')) {
+                    $params[$key] = $value;
+                }
+            }
+            $this->setParams($_POST['params']);
         }
     }
 
@@ -92,7 +111,7 @@ class Router implements RouterInterface {
     }
 
     public function setRequestType($request) {
-        $this->requestType = $requestType;
+        $this->requestType = $request;
     }
 
     public function getRequestType() {
