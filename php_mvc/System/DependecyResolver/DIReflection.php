@@ -1,10 +1,10 @@
 <?php	
-	include_once 'Test.php';
-	include_once 'DBConnector.php';
-	include_once 'DBService.php';
-	include_once 'ITest.php';
-	include_once 'IDBConnector.php';
-	include_once 'IDBService.php';
+	include_once '../../Models/Test.php';
+	include_once '../../Models/DBConnector.php';
+	include_once '../../Models/DBService.php';
+	include_once '../../Models/ITest.php';
+	include_once '../../Models/IDBConnector.php';
+	include_once '../../Models/IDBService.php';
 	
 	class DIReflexion{
 	

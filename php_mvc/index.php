@@ -1,6 +1,7 @@
 <?php
-include_once('Controllers/TestController.php');
-global $config;
-$test = new TestController();
-echo $test;
+	include_once './System/Controllers/FrontController.php';
+	
+	//the entry point in the application
+	$frontController = FrontController :: getInstance();
+	$frontController -> run();
 ?>

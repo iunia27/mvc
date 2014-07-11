@@ -1,7 +1,7 @@
 <?php
-	include_once '../Router.php';
-	include_once '../CustomInject.php';
-	include_once '../DIReflection.php';
+	include_once './Routes/Router.php';
+	include_once '../DependencyResolver/CustomInject.php';
+	include_once '../DependencyResolver/DIReflection.php';
 	
 	class FrontController{
 		private $route;				
@@ -53,9 +53,6 @@
 			return $ex->getControllerContext($controllerName);
 		}
 	}
-	
-	$frontController = FrontController :: getInstance();
-	$frontController -> run();
 ?>
 
 
