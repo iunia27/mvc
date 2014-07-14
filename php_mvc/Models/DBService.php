@@ -1,5 +1,4 @@
 <?php
-	include_once 'IDBService.php';
 	
 	class DBService implements IDBService{
 		public function __construct(){}

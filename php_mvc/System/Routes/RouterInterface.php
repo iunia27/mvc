@@ -1,7 +1,7 @@
 <?php
 interface RouterInterface{
 
-		//seters and geters for each property
+		//setters and getters for each property
         public function setSchema($schema);
 		
 		public function getSchema();

@@ -1,5 +1,4 @@
 <?php
-	include_once 'IDBConnector.php';
 
 	class DBConnector implements IDBConnector{
 		

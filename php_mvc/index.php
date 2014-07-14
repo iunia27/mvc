@@ -1,6 +1,8 @@
 <?php
-include_once('Controllers/TestController.php');
+
+include_once('Autoloader.php');
 global $config;
-$test = new TestController();
-echo $test;
+
+$frontController = new FrontController();
+$frontController->run();
 ?>
