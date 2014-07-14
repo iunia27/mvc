@@ -1,10 +1,5 @@
 <?php
 
-
-//	include_once '../Router.php';
-//	include_once '../CustomInject.php';
-//	include_once '../DIReflection.php';
-
 class FrontController {
 
     private $route;
