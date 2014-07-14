@@ -1,7 +1,8 @@
 <?php
-	include_once './System/Controllers/FrontController.php';
-	
-	//the entry point in the application
-	$frontController = FrontController :: getInstance();
-	$frontController -> run();
+
+include_once('Autoloader.php');
+global $config;
+
+$frontController = new FrontController();
+$frontController->run();
 ?>

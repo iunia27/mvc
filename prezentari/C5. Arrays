@@ -1,0 +1,167 @@
+																			Chapter 5. Arrays
+																			
+	Index versus associative arrays
+		The  keys  of  an indexed array are integers, beginning at 0. Indexed arrays are used when you identify things by their position.  Associative arrays have strings as keys and 
+behave more like two-column tables. The first column is the key, which is used to access the value.
+		Ex: Indexed array example: $array = array('alex', 'buzi', 'iunia', 'remus');
+								   $echo $array[0]; //displays 'alex' on the screen
+			Associative array: $array = array(22 => 'alex', 33 => 'buzi', 25 => 'iunia', 'jnr' => 'remus');
+							   $echo $array['jnr']; //displays 'jnr' on the screen
+							   
+	Adding Values to the End of array
+		To insert more values into the end of an existing indexed array, use the []syntax:
+			$family = array("Fred", "Wilma");
+			$family[] = "Pebbles"; // $family[2] is "Pebbles"
+	
+	Assigning a Range of Values
+		The  range()function creates an array of consecutive integer or character values between and including the two values you pass to it as arguments. For example:
+			$numbers = range(2, 5);  // $numbers = array(2, 3, 4, 5);
+			$letters = range('a', 'z');  // $letters holds the alphabet
+			$reversedNumbers = range(5, 2);  // $reversedNumbers = array(5, 4, 3, 2);
+			
+	The  count()and  sizeof()functions are identical in use and effect. They return the number of elements in the array. There is no stylistic preference about which function
+you use. 
+		Here’s an example:
+			$family = array("Fred", "Wilma", "Pebbles");
+			$size = count($family);  // $size is 3
+			
+	Padding an Array
+		To create an array with values initialized to the same content, use  array_pad(). The first argument to  array_pad()is the array, the second argument is the minimum number
+of elements you want the array to have, and the third argument is the value to give any elements that are created. 
+		Here's a array_pad() example:
+			$scores = array(5, 10);
+			$padded = array_pad($scores, 5, 0); // $padded is now array(5, 10, 0, 0, 0)
+			
+	Slicing an Array
+		To extract only a subset of the array, use the array_slice() function.
+		The array_slice()function returns a new array consisting of a consecutive series of values from the original array.
+		Here's an example of array_slice() usage:	
+			$people = array("Tom", "Dick", "Harriet", "Brenda", "Jo");
+			$middle = array_slice($people, 2, 2); // $middle is array("Harriet", "Brenda")
+			
+	Splitting an Array into Chunks
+		The  function  returns  an  array  of  the  smaller  arrays.  The  third  argument,  preserve_keys, is a Boolean value that determines whether the elements of the new arrays
+have the same keys as in the original (useful for associative arrays) or new numeric keys starting from 0 (useful for indexed arrays). The default is to assign new keys, as shown
+here:
+		$nums = range(1, 7);
+		$rows = array_chunk($nums, 3);
+		print_r($rows);
+		Array (
+			[0] => Array (
+						[0] => 1
+						[1] => 2
+						[2] => 3
+			)
+			[1] => Array (
+						[0] => 4
+						[1] => 5
+						[2] => 6
+			)
+			[2] => Array (
+						[0] => 7
+			)
+		)
+	
+	Keys and Values
+		The array_keys()function returns an array consisting of only the keys in the array in internal order:
+			$arrayOfKeys = array_keys(array);
+		PHP also provides a (generally less useful) function to retrieve an array of just the values in an array, array_values():
+			$arrayOfValues = array_values(array);
+			
+	Creating Variables from an Array		
+		$array = array('cover' => "bird", 'shape' => "rectangular");
+		extract($array, EXTR_PREFIX_ALL, "book");
+		
+	Creating an Array from an Variables	
+		$color = "indigo";
+		$shape = "curvy";
+		$floppy = "none";
+		$a = compact("color", "shape", "floppy");
+	
+	Traversing Arrays	
+		The foreach Construct:
+			1.  foreach ($addresses as $value) {
+					echo "Processing {$value}\n";
+				}
+			2.  foreach ($person as $key => $value) {
+					echo "Fred's {$key}is {$value}\n";
+				}
+		
+		Using a for Loop:
+			for ($i = 0; $i < $addressCount; $i++) {
+				$value = $addresses[$i];
+				echo "{$value}\n";
+			}
+			
+		Calling a Function for Each Array Element
+			PHP provides a mechanism, array_walk(), for calling a user-defined function once per element in an array:
+				array_walk(array, callable);
+			$callback = function printRow($value, $key)
+			{
+				print("<tr><td>{$value}</td><td>{$key}</td></tr>\n");
+			};
+		
+		Reducing an Array
+			A cousin of  array_walk(),  array_reduce()applies a function to each element of the array in turn, to build a single value:
+				$result = array_reduce(array, callable[, default]);
+				
+				$callback = function addItUp($runningTotal, $currentValue)
+				{
+					$runningTotal += $currentValue * $currentValue;
+					return $runningTotal;
+				};
+				$numbers = array(2, 3, 5, 7);
+				$total = array_reduce($numbers, $callback);
+				echo $total;
+				
+				The default argument, if provided, is a seed value. For instance, if we change the call to array_reduce()in the previous example to:
+					$total = array_reduce($numbers, "addItUp", 11);
+		
+		Sorting		
+			Sorting One Array at a Time
+				Sort array by values, then reassign indices:
+					sort, rsort, usort().
+					
+				Sort array by values 
+					asort(), arsort(), uasort(
+					
+				Sort array by keys 
+					ksort(), krsort(), uksort()
+			
+		Natural-Order Sorting	
+			PHP’sbuilt-in sort functions correctly sort strings and numbers, but they don’t correctly sort strings that contain numbers.
+				$output = natsort(input);
+				$output = natcasesort(input);
+		
+		Sorting Multiple Arrays at Once
+			The array_multisort()function sorts multiple indexed arrays at once:
+				array_multisort(array1[, array2, ... ]);	
+				Ex: array_multisort($ages, SORT_ASC, $zips, SORT_DESC, $names, SORT_ASC);
+			
+		Merging Two Arrays	
+			The array_merge()function intelligently merges two or more arrays:
+				$merged = array_merge(array1, array2[, array ...])
+			
+		Calculating the Difference Between Two Arrays
+			$diff = array_diff(array1, array2[, array... ]);
+			
+		Filtering Elements from an Array
+			$filtered = array_filter(array, callback);
+			Ex: $callback = function isOdd ($element)
+							{
+								return $element % 2;
+							};
+				$numbers = array(9, 23, 24, 27);
+				$odds = array_filter($numbers, $callback);
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			

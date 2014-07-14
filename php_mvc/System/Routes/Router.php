@@ -1,8 +1,5 @@
 <?php
 
-include_once("config.php");
-include_once("RouterInterface.php");
-
 class Router implements RouterInterface {
 
     //properties declaration
@@ -65,7 +62,7 @@ class Router implements RouterInterface {
         }
     }
 
-    //seters and geters for each property
+    //setters and getters for each propriety
     public function setSchema($schema) {
         $this->schema = $schema;
     }

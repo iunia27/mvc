@@ -1,5 +1,4 @@
 <?php
-	include_once 'ITest.php';
 	
 	class Test implements ITest{
 		private $idbc;
