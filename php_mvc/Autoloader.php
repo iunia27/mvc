@@ -6,7 +6,7 @@ function __autoload($class_name) {
         'System/',
         'System/Controllers/',
         'System/Routes/',
-        'System/InjectContainer/',
+        'System/DependecyResolver/',
         'Controllers/',
         'Models/',
     );
