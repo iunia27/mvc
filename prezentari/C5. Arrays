@@ -4,9 +4,9 @@
 		The  keys  of  an indexed array are integers, beginning at 0. Indexed arrays are used when you identify things by their position.  Associative arrays have strings as keys and 
 behave more like two-column tables. The first column is the key, which is used to access the value.
 		Ex: Indexed array example: $array = array('alex', 'buzi', 'iunia', 'remus');
-								   $echo $array[0]; //displays 'alex' on the screen
+								   echo $array[0]; //displays 'alex' on the screen
 			Associative array: $array = array(22 => 'alex', 33 => 'buzi', 25 => 'iunia', 'jnr' => 'remus');
-							   $echo $array['jnr']; //displays 'jnr' on the screen
+							   echo $array['jnr']; //displays 'jnr' on the screen
 							   
 	Adding Values to the End of array
 		To insert more values into the end of an existing indexed array, use the []syntax:
@@ -96,10 +96,13 @@ here:
 		Calling a Function for Each Array Element
 			PHP provides a mechanism, array_walk(), for calling a user-defined function once per element in an array:
 				array_walk(array, callable);
-			$callback = function printRow($value, $key)
-			{
-				print("<tr><td>{$value}</td><td>{$key}</td></tr>\n");
-			};
+				
+				$callback = function printRow($value, $key)
+				{
+					print("<tr><td>{$value}</td><td>{$key}</td></tr>\n");
+				};
+				
+				array_walk(array, callable);
 		
 		Reducing an Array
 			A cousin of  array_walk(),  array_reduce()applies a function to each element of the array in turn, to build a single value:
@@ -141,7 +144,9 @@ here:
 		Merging Two Arrays	
 			The array_merge()function intelligently merges two or more arrays:
 				$merged = array_merge(array1, array2[, array ...])
-			
+			1 2
+			3 4
+			1 2 3 4
 		Calculating the Difference Between Two Arrays
 			$diff = array_diff(array1, array2[, array... ]);
 			

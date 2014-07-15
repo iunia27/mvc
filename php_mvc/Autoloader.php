@@ -5,10 +5,11 @@ function __autoload($class_name) {
     $directories = array(
         'System/',
         'System/Controllers/',
+		'System/View/',
         'System/Routes/',
         'System/DependecyResolver/',
         'Controllers/',
-        'Models/',
+        'Models/'
     );
 
     //for each directory

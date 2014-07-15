@@ -1,6 +1,6 @@
 <?php
 
-class TestController {
+class TestController extends BaseController {
 
     private $itest;
     private $idbs;
@@ -15,8 +15,14 @@ class TestController {
         $method = $this->itest->show() . $this->idbs->store() . '</br> This was made using dependency injection';
         echo 'Four: Here is the response from the services: <br/><br/>';
         echo $method;
-        return '';
+		$test = 'this is just a test';
+        $this->ReturnView($test, true);
     }
+	
+	public function show(){
+		$data = array('a', 'b', 'c', 'd');
+		$this->ReturnView($data, true);
+	}
 
 }
 

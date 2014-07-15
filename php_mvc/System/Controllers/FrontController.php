@@ -3,7 +3,6 @@
 class FrontController {
 
     private $route;
-    private $itest;
     private $controllerContext;
     //singleton
 
@@ -12,11 +11,7 @@ class FrontController {
     public function __construct() { //Thou shalt not construct that which is unconstructable!
     }
 
-    private function __clone() {
-        
-    }
-
-//Me not like clones! Me smash clones!
+    private function __clone() {} //Me not like clones! Me smash clones!
 
     public static function getInstance() {
         if (!isset(static::$instance)) {
@@ -38,6 +33,10 @@ class FrontController {
         echo 'First: Injecting the dependencies through the dependency injection service<br/><br/><br/>';
 
         $cont = $this->getControllerContext($controller);
+		$cont->setActionName($action);
+		$cont->setControllerName($controller);
+		$cont->setParams($this->route->getParams());
+		$cont->setView(new View($cont));
 
         //Response
         echo 'Second: The ' . $controller . ', action ' . $action . 'is invoked.<br/><br/><br/>';
