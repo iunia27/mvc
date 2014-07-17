@@ -17,14 +17,15 @@
 		}
 		
 		//setters and getters for views
-		public function setPath($path){
-			if (isset($path)){
-				$components = explode('/',$path);
-				if (count($components) == 1){
-					$path = $this->controller.'/'.$path;
+		public function setPath($viewsPaths){
+			if (isset($viewsPaths)){
+				if (is_array($viewsPaths)){
+					foreach($viewsPaths as $current){
+						$this->checkAndBuildPartialPath($current);
+					}
 				}
-				if (!in_array($path, $this->path)){
-					$this->path = $this->array_push_assoc($this->path, $path, $this->generateIncludeFilePath($path));
+				else{
+					$this->checkAndBuildPartialPath($viewsPaths);
 				}
 			}
 		}
@@ -33,7 +34,9 @@
 			return $this->path;
 		}
 		
-		//render function for view
+		/*
+		* Renders the view. Decompresses the data and make the real include in the current html page.
+		*/
 		public function render($viewModel){
 			extract($viewModel);
 			foreach ($this->path as $currentKey => $currentValue){
@@ -41,13 +44,32 @@
 			}
 		}
 		
+		/*
+		* Builds the physical path to include the view.
+		*/
 		private function generateIncludeFilePath($path){
 			return self::ROOT. $path .'.html';
 		}
 		
+		/*
+		* Based on an initial array, inserts a new associative element based on $key and $value parameters.
+		*/
 		private function array_push_assoc($array, $key, $value){
 			$array[$key] = $value;
 			return $array;
+		}
+		
+		/*
+		* Checks the path format and formats it into the correct way. If the path it's ok it's pushed in the deliverable array of paths.
+		*/
+		private function checkAndBuildPartialPath($path){
+			$components = explode('/',$path);
+			if (count($components) == 1){
+				$path = $this->controller.'/'.$path;
+			}
+			if (!in_array($path, $this->path)){
+				$this->path = $this->array_push_assoc($this->path, $path, $this->generateIncludeFilePath($path));
+			}
 		}
 	}
 ?>

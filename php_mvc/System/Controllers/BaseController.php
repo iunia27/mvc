@@ -50,14 +50,7 @@
 		*/
 		public function ReturnView($viewModel, $viewsPaths){
 			if (isset($viewsPaths)){
-				if (is_array($viewsPaths)){
-					foreach($viewsPaths as $current){
-						$this->view->setPath($current);
-					}
-				}
-				else{
-					$this->view->setPath($viewsPaths);
-				}
+				$this->view->setPath($viewsPaths);
 			}
 			return $this->view->render($viewModel);
 		}

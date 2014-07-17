@@ -18,7 +18,7 @@ class TestController extends BaseController {
 	public function show(){
 		$data = array('p1' => 'a', 'p2' => 'b', 'p3' => 'c', 'p4' => 'd');
 		$views = array('Index', 'Show');
-		$this->ReturnView($data, $views);
+		$this->ReturnView($data, 'Show');
 	}
 
 }
