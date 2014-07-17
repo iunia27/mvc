@@ -43,9 +43,23 @@
 			$this->view = $view;
 		}
 		
-		//gets the view
-		public function ReturnView($viewModel, $fullView){
-			return $this->view->render($viewModel, $fullView);
+		/*
+		* Returns all requested views based on their paths
+		* $viewModel param -> the array of all model that need to be passed to the view.
+		* $viewsPaths param -> the array of views that should be loaded in the view.
+		*/
+		public function ReturnView($viewModel, $viewsPaths){
+			if (isset($viewsPaths)){
+				if (is_array($viewsPaths)){
+					foreach($viewsPaths as $current){
+						$this->view->setPath($current);
+					}
+				}
+				else{
+					$this->view->setPath($viewsPaths);
+				}
+			}
+			return $this->view->render($viewModel);
 		}
 	}
 

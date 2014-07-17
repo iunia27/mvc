@@ -29,18 +29,19 @@ class FrontController {
     private function dispatch() {
         $controller = ucfirst($this->route->getControllerName() . 'Controller');
         $action = ucfirst($this->route->getActionName());
+		$params = $this->route->getParams();
 
         echo 'First: Injecting the dependencies through the dependency injection service<br/><br/><br/>';
 
         $cont = $this->getControllerContext($controller);
 		$cont->setActionName($action);
 		$cont->setControllerName($controller);
-		$cont->setParams($this->route->getParams());
+		$cont->setParams($params);
 		$cont->setView(new View($cont));
 
         //Response
         echo 'Second: The ' . $controller . ', action ' . $action . 'is invoked.<br/><br/><br/>';
-        $response = $cont->$action();
+        $response = $cont->$action($params);
         echo $response;
     }
 
