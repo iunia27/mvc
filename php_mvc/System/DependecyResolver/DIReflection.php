@@ -17,7 +17,7 @@ class DIReflection {
         if ($instClass->isInstantiable()) {
             $params = $instClass->getConstructor()->getParameters();
         }
-
+		
         $paramsForInstance = array();
         foreach ($params as $current) {
 
@@ -35,12 +35,6 @@ class DIReflection {
     private function getConcreteClass($interfaceName) {
         return substr($interfaceName, 1);
     }
-
-    private function __autoload($controllerName) {
-        $filename = "./" . $controllerName . ".php";
-        include_once($filename);
-    }
-
 }
 
 ?>

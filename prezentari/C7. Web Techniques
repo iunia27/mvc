@@ -1,0 +1,76 @@
+																	Chapter 7. Web Techniques
+	
+	1. HTTP Basics
+		The Web runs on HTTP, or HyperText Transfer Protocol. This protocol governs how web browsers request files from web servers and how the servers send the files back.
+		When a web browser requests a web page, it sends an HTTP request message to a web server. The request message always includes some header information, and it sometimes also 
+includes a body. The web server responds with a reply message, which always includes header information and usually contains a body.
+		Example: User-Agent: Mozilla/5.0 (Windows 2000; U) Opera 6.0 [en] -> informations about the browser
+				 Accept: image/gif, image/jpeg, text/*, */* -> information about the MIME types that browser accepts
+				 
+	2. Variables
+		Server configuration  and  request  information—including  form  parameters  and cookies—are accessible in three different ways from your PHP scripts.Collectively, this 
+information is referred to as  EGPCS(environment, GET, POST, cookies, and server).
+		There are 6 global variables that provide access to the mentioned data:
+			$_COOKIE -> Contains any cookie values passed as part of the request, where the array keys represents the names of the cookie.
+					 -> a small piece of data sent from a website and stored in a user's web browser while the user is browsing that website.
+					 
+			$_GET    -> Contains any parameters that are part of a GET request.
+					 -> Requests parameters from a specified resource.
+					 
+			$_POST	 -> Contains any parameters that are part of a POST request.
+					 -> Submits data to be processed to a specified resource
+					 
+			$_FILES	 -> Contains information about any uploaded files.
+			$_SERVER -> Contains useful information about the web server.
+			$_ENV	 -> Contains the values of any environment variables.
+			$_REQUEST-> contains the elements of the $_GET, $_POST, and $_COOKIE arrays all in one array variable.
+	
+	3. Processing Forms
+		3.1 Methods
+			The method that a particular form uses is specified with the method attribute to the form tag.
+			
+		3.2 Parameters
+			Use the $_POST, $_GET, and $_FILES arrays to access form parameters from your PHP code.
+			DEMO
+			
+		3.3 Sticky Forms
+		
+		3.4 Multivalued Parameters
+		
+		3.5 Sticky Multivalued Parameters
+		
+		3.6 File Uploads
+			To handle file uploads (supported in most modern browsers), use the $_FILES array. Using the various authentication and file upload functions, you can control who is
+allowed to upload files and what to do with those files once they’re on your system.
+
+		3.7 Form Validation
+			There are several strategies available for validating data:
+				1. Javascript
+				2. PHP validation
+				
+	4. Setting Response Headers
+		
+		4.1
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
