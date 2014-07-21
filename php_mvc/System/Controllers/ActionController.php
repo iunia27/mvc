@@ -1,6 +1,7 @@
 <?php
 
 abstract class ActionController {
+    
 
     function __construct() {
         

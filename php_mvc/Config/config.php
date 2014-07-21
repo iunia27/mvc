@@ -1,7 +1,7 @@
 <?php
 
 $config = array(
-    'defaultController' => 'Home',
+    'defaultController' => 'test',
     'defaultAction' => 'index'
 );
 ?>
