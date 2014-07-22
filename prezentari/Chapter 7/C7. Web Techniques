@@ -1,44 +1,45 @@
-																	Chapter 7. Web Techniques
-	
+																				Chapter 7. Web Techniques
+
 	1. HTTP Basics
-		The Web runs on HTTP, or HyperText Transfer Protocol. This protocol governs how web browsers request files from web servers and how the servers send the files back.
+		The Web runs on HTTP, or HyperText Transfer Protocol. This protocol manages how web browsers request files from web servers and how the servers send the files back.
 		When a web browser requests a web page, it sends an HTTP request message to a web server. The request message always includes some header information, and it sometimes also 
 includes a body. The web server responds with a reply message, which always includes header information and usually contains a body.
 		Example: User-Agent: Mozilla/5.0 (Windows 2000; U) Opera 6.0 [en] -> informations about the browser
 				 Accept: image/gif, image/jpeg, text/*, */* -> information about the MIME types that browser accepts
-				 
+
 	2. Variables
-		Server configuration  and  request  information—including  form  parameters  and cookies—are accessible in three different ways from your PHP scripts.Collectively, this 
-information is referred to as  EGPCS(environment, GET, POST, cookies, and server).
 		There are 6 global variables that provide access to the mentioned data:
 			$_COOKIE -> Contains any cookie values passed as part of the request, where the array keys represents the names of the cookie.
 					 -> a small piece of data sent from a website and stored in a user's web browser while the user is browsing that website.
-					 
-			$_GET    -> Contains any parameters that are part of a GET request.
-					 -> Requests parameters from a specified resource.
-					 
-			$_POST	 -> Contains any parameters that are part of a POST request.
-					 -> Submits data to be processed to a specified resource
-					 
-			$_FILES	 -> Contains information about any uploaded files.
+
+			$_GET    -> An associative array of variables passed to the current script via the URL parameters.
+
+			$_POST	 -> An associative array of variables passed to the current script via the HTTP POST method.
+
+			$_FILES	 -> Contains information about any uploaded file.
 			$_SERVER -> Contains useful information about the web server.
 			$_ENV	 -> Contains the values of any environment variables.
 			$_REQUEST-> contains the elements of the $_GET, $_POST, and $_COOKIE arrays all in one array variable.
-	
+
 	3. Processing Forms
 		3.1 Methods
 			The method that a particular form uses is specified with the method attribute to the form tag.
-			
+
 		3.2 Parameters
 			Use the $_POST, $_GET, and $_FILES arrays to access form parameters from your PHP code.
 			DEMO
-			
+
 		3.3 Sticky Forms
-		
+			Many websites use a technique known as sticky forms, in which the results of a query are accompanied by a search form whose default values are those of the previous query.
+			
+			
 		3.4 Multivalued Parameters
-		
+			HTML selection lists, created with the select tag, can allow multiple selections.
+			
 		3.5 Sticky Multivalued Parameters
-		
+			HTML selection lists, created with the select tag, can allow multiple selections.
+			You’ll need to check to see whether each possible value in the form was one of the submitted values.
+			
 		3.6 File Uploads
 			To handle file uploads (supported in most modern browsers), use the $_FILES array. Using the various authentication and file upload functions, you can control who is
 allowed to upload files and what to do with those files once they’re on your system.
@@ -47,30 +48,96 @@ allowed to upload files and what to do with those files once they’re on your s
 			There are several strategies available for validating data:
 				1. Javascript
 				2. PHP validation
-				
+
 	4. Setting Response Headers
+		The HTTP response that a server sends back to a client contains headers that identify the type of content in the body of the response, the server that sent the response, 
+how many bytes are in the body, when the response was sent, etc. PHP and Apache normally take care of the headers for you, identifying the document	as HTML, calculating the length of 
+the HTML page, and so on.
+
+		4.1 Content Types
+			The Content-Type header identifies the type of document being returned. Ordinarily this is "text/html", indicating an HTML document, but there are other useful 
+document types. 
+			Example
+				Content-type: "text/plain" forces the browser to treat the page as plain text. This type is like an automatic “view source,” and it is useful when debugging.
+				Cache-Control: private, community="UCI"
+				X-Requested-With: mainly used to identify Ajax requests. Most JavaScript frameworks send this header with value of XMLHttpRequest.
+				
+				External link: http://en.wikipedia.org/wiki/List_of_HTTP_header_fields
+				
+		4.2 Redirections
+			To send the browser to a new URL, known as a redirection, you set the Location header.
+			Example: header("Location: http://www.example.com/elsewhere.html");
+			When you provide a partial URL (e.g., /elsewhere.html), the web server handles this redirection internally. This is only rarely useful, as the browser generally won’t 
+learn that it isn’t getting the page it requested.
+
+		4.3 Expiration	
+			A server can explicitly inform the browser, and any proxy caches that might be between the server and browser, of a specific date and time for the document to expire. 
+Proxy and browser caches can hold the document until that time or expire it earlier. Repeated reloads of a cached document do not contact the server. However, an attempt to fetch 
+an expired document does contact the server.
+			Examples:
+				header("Expires: Fri, 18 Jan 2006 05:30:00 GMT"); -> certain date
+				$then = gmstrftime("%a, %d %b %Y %H:%M:%S GMT", $now + 60 * 60 * 3); -> it is available for 3 hours
+				$then = gmstrftime("%a, %d %b %Y %H:%M:%S GMT", $now + 365 * 86440); -> it never expires
+			If you want to force the browser to avoid pages caching you can use one of the following alternatives:
+				header("Expires: Mon, 26 Jul 1997 05:00:00 GMT");
+				header("Last-Modified: " . gmdate("D, d M Y H:i:s") . " GMT");
+				header("Cache-Control: no-store, no-cache, must-revalidate");
+				header("Cache-Control: post-check=0, pre-check=0", false);
+				header("Pragma: no-cache");
+				
+		4.4 Authentication
+			HTTP authentication works through request headers and response statuses. A browser can send a username and password (the credentials) in the request headers.
+			If the credentials aren’t sent or aren’t satisfactory, the server sends a “401 Unauthorized” response and identifies the realm of authentication (a string such as 
+“Mary’s Pictures” or “Your Shopping Cart”) via the WWW-Authenticate header.
+			Example:
+				header('WWW-Authenticate: Basic realm="Top Secret Files"');
+				header("HTTP/1.0 401 Unauthorized");	
 		
-		4.1
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+		5. Maintaining State
+			HTTP is a stateless protocol, which means that once a web server completes a client’s request for a web page, the connection between the two goes away.
+			To get around the Web’s lack of state, programmers have come up with many tricks to keep track of state information between requests.
+			Ways of session tracking used in php:
+				-> using hidden fields in the form
+				-> URL rewriting
+				-> cookies
+			The best way to maintain state with PHP is to use the built-in session-tracking system.
+			PHP’s session-tracking mechanism uses cookies (or URLs) to elegantly solve most problems that require state.
+			
+			5.1 Cookies
+				A cookie is basically a string that contains several fields. A server can send one or more cookies to a browser in the headers of a response. Some of the cookie’s 
+fields indicate the pages for which the browser should send the cookie as part of the request.
+				Use the setcookie() function to send a cookie to the browser:
+					setcookie(name [, value [, expire [, path [, domain [, secure ]]]]]);
+					
+					name    -> the unique name for a particular cookie. 
+					value   -> an arbitrary string value attached to this cookie. It can’t be much larger than 3.5 KB.
+					expire  -> The expiration date for this cookie.
+					path	-> The browser will return the cookie only for URLs below this path.
+					domain	-> The browser will return the cookie only for URLs within this domain. The default is the server hostname.
+					secure	-> The browser will transmit the cookie only over https connections. The default is false, meaning that it’s OK to send the cookie over insecure 
+							   connections.
+		
+			5.2 Sessions
+				PHP has built-in support for sessions, handling all the cookie manipulation for you to provide persistent variables that are accessible from different pages and 
+across multiple  visits to the site.
+				Each first-time visitor is issued a unique session ID. By default, the session ID is stored in a cookie called PHPSESSID.
+				5.2.1 Session basics
+					Sessions are started automatically when a script begins running.
+					You can register a variable with the session by passing the name of the variable to the	$_SESSION[] array
+						session_start();
+						$_SESSION['hits'] = $_SESSION['hits'] + 1;
+				5.2.2 Alternatives to cookies
+					PHP’s session system supports two alternatives: form fields and URLs.
+					PHP can rewrite your HTML files, adding the session ID to every relative link. For this to work, though, PHP must be configured with the -enable-trans-id option 
+when compiled.
+				
+		6. Combining Cookies and Sessions
+			Using a combination of cookies and your own session handler, you can preserve state across visits.
+						
+		7. SSL
+			The Secure Sockets Layer (SSL) provides a secure channel over which regular HTTP requests and responses can flow.
+			The HTTPS entry in the $_SERVER array is set to 'on' if the PHP page was generated in response to a request over an SSL connection.
+			A common mistake is to send a form over a secure connection (e.g., https://www.example.com/form.html), but have the action of the form submit to an http:// URL. Any form
+parameters then entered by the user are sent over an insecure connection—a trivial packet sniffer can reveal them
+		
+		
