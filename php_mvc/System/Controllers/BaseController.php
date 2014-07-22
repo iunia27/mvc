@@ -6,8 +6,12 @@
 		private $actionName;
 		private $params;
 		private $view;
+        protected $db;
 		
-		protected function __construct() {}
+		protected function __construct() {
+            global $config;
+            $this->db = new Db($config);
+        }
 
 		abstract function Index();
 		

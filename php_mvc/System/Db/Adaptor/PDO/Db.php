@@ -2,6 +2,11 @@
 
 class Db extends DB_Abstract {
 
+    /**
+     * Creates a connection to the database
+     * @return if a connection already exists.
+     * @throws Exception if the connection isn't successful.
+     */
     protected function _connect() {
         // if we already have a PDO object, no need to re-connect.
         if ($this->_connection) {
@@ -14,12 +19,12 @@ class Db extends DB_Abstract {
         }
 
         // create PDO connection
-        $dsn = 'mysql:host=' . $_config['host'] . ";dbname" . $_config['dbname'];
+        $dsn = 'mysql:host=' . $this->config['host'] . ";dbname=" . $this->config['dbname'];
         try {
             $this->_connection = new PDO(
                             $dsn,
-                            $this->_config['username'],
-                            $this->_config['password']
+                            $this->config['username'],
+                            $this->config['password']
             );
         } catch (PDOException $e) {
 
@@ -27,40 +32,53 @@ class Db extends DB_Abstract {
         }
     }
 
+    /**
+     * Verifies if a connection to the database is active
+     * @return Boolean true if the connection is active, false otherwise.
+     */
     public function isConnected() {
         return ((bool) ($this->_connection instanceof PDO));
     }
 
+    /**
+     * Closing the connection
+     */
     public function closeConnection() {
         $this->_connection = null;
     }
 
+    /**
+     * Prepares an sql statement
+     * @param String $sql 
+     * @return String - the prepared statement
+     */
     public function prepare($sql) {
         $this->_connect();
         $stmt = $this->_connection->prepare($sql);
         return $stmt;
     }
 
-    public function lastInsertId($tableName = null, $primaryKey = null) {
-        $this->_connect();
-        return $this->_connection->lastInsertId();
-    }
-
     /**
      * 
-     * @param type $sql
-     * @param type $bind 
+     * @param String $sql
+     * @param array $bind 
      * Returns true if the query succeeded, false otherwise
      */
     public function query($sql, $bind = array()) {
         try {
-            $stmt = $this->connection->prepare($sql);    //prepare statement
+            $this->_connect();
+            $stmt = $this->_connection->prepare($sql);    //prepare statement
             return $stmt->execute($bind);    //execute query       
         } catch (PDOException $e) {
             throw new Exception($e->getMessage(), $e->getCode(), $e);
         }
     }
 
+    /**
+     * Executes the query
+     * @param String $sql
+     * @throws Exception if the execution is not successful.
+     */
     public function exec($sql) {
 
         try {
