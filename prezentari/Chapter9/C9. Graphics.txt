@@ -1,0 +1,139 @@
+																						Chapter 9. Graphics
+																						
+	1. Embedding an Image in a Page
+		A common misconception is that there is a mixture of text and graphics flowing across a single HTTP request. After all, when you view a page, you see a single page containing
+such a mixture. It is important to understand that a standard web page containing text and graphics is created through a series of HTTP requests from the web browser, each
+answered by a response from the web server. Each response can contain one and only one type of data, and each image requires a separate HTTP request and web server response.
+		Example:
+			This page contains two images.
+			<img src="image1.png" alt="Image 1" />
+			<img src="image2.png" alt="Image 2" />
+			
+			And here are the requests that the browser does to the server:
+			GET /page.html HTTP/1.0
+			GET /image1.png HTTP/1.0
+			GET /image2.png HTTP/1.0
+			
+	2. Basic Graphics Concepts
+		An  image is a rectangle of pixels of various colors. Colors are identified by their position in the  palette, an array of colors. Each entry in the palette has three separate 
+color values—one for red, one for green, and one for blue. Each value ranges from 0 (this color not present) to 255 (this color at full intensity).
+		Different file formats handle image  transparency:
+			-> PNG: support an  alpha channel, an extra value for every pixel reflecting the transparency at that point;
+			-> GIF: simply designate one entry in the palette as indicating transparency;
+			-> JPG: don’t support transparency at all.
+		Antialiasing is where pixels at the edge of a shape are moved or recolored to make a gradual transition between the shape and its background. This prevents the rough and
+jagged edges that can make for unappealing images.
+
+	3. Creating and Drawing Images
+		<?php
+			$image = imagecreate(200, 200);
+			$white = imagecolorallocate($image, 0xFF, 0xFF, 0xFF);
+			$black = imagecolorallocate($image, 0x00, 0x00, 0x00);
+			imagefilledrectangle($image, 50, 50, 150, 150, $black);
+			header("Content-Type: image/png");
+			imagepng($image);
+		?>
+	
+	4. The Structure of a Graphics Program
+		You can create a 256-color image with the imagecreate()function, which returns an image handle:
+			$image = imagecreate(width, height);
+		All colors used in an image must be allocated with the imagecolorallocate()function:
+			$color = imagecolorallocate(image, red, green, blue);
+		Uses  imagefilledrect angle(), in which you specify the dimensions of the rectangle by passing the coordinates of the top-left and bottom-right corners.
+		The next step is to send a Content-Type header to the browser with the appropriate content type for the kind of image being created.
+			imagegif(image[, filename]);
+			imagejpeg(image[, filename[, quality]]);
+			imagepng(image[, filename]);
+			imagewbmp(image[, filename]);
+		
+	5. Testing for Supported Image Formats
+		The constants IMG_GIF, IMG_JPG, IMG_PNG, and IMG_WBMPcorrespond to the bits for those image formats.
+		
+	6. Reading an Existing File
+		If you want to start with an existing image and then modify it, use imagecreatefrom gif(), imagecreatefromjpeg(), or imagecreatefrompng():
+			$image = imagecreatefromgif(filename);
+			$image = imagecreatefromjpeg(filename);
+			$image = imagecreatefrompng(filename);
+			
+	7. Basic Drawing Functions
+		The most basic function is imagesetpixel():
+			imagesetpixel(image, x, y, color);
+		There are two functions for drawing lines, imageline()and imagedashedline():
+			imageline(image, start_x, start_ y, end_x, end_ y, color);
+			imagedashedline(image, start_x, start_ y, end_x, end_ y, color);
+		There are two functions for drawing rectangles, one that simply draws the outline and one that fills the rectangle with the specified color:
+			imagerectangle(image, tlx, tly, brx, bry, color);
+			imagefilledrectangle(image, tlx, tly, brx, bry, color);	
+		You can draw arbitrary polygons with the  imagepolygon()and  imagefilledpolygon() functions:
+			imagepolygon(image, points, number, color);
+			imagefilledpolygon(image, points, number, color);
+		The imagearc()function draws an arc (a portion of an ellipse):
+			imagearc(image, center_x, center_ y, width, height, start, end, color);
+		The  image rotate()function allows you to rotate an image by an arbitrary angle:
+			imagerotate(image, angle, background_color);
+			
+	8. Images with Text
+		Often it is necessary to add text to images. GD has built-in fonts for this purpose.
+		Five fonts are built-in, and you can load additional fonts through the imageloadfont()function
+	
+	9. Scaling Images
+		There are two ways to change the size of an image:
+			-> imagecopyresized()function is fast but crude, and may lead to jagged edges in your new images.
+				-> general form: imagecopyresized(dest, src, dx, dy, sx, sy, dw, dh, sw, sh);
+			-> imagecopyresampled()function is slower, but features pixel interpolation to give smooth edges and clarity to the resized image.
+				-> imagecopyresampled(dest, src, dx, dy, sx, sy, dw, dh, sw, sh);
+			-> dest, src -> images reference.
+			-> dx, dy    -> the point in the destination image where the region will be copied.
+			-> sx, sy	 ->  the upper-left corner of the source image.
+			-> sw,  sh,  dw, dh -> parameters give the width and height of the copy regions in the source and destination.
+	
+	10. Color Handling
+		The GD library supports both 8-bit palette (256 color) images and true color images with alpha channel transparency
+	
+	11. Using the Alpha Channel
+		 Alpha blending is a toggle that determines whether the alpha channel, if present, should be applied when drawing. If alpha blending is off, 
+the old pixel is replaced with the new pixel. If an alpha channel exists for the new pixel, it is maintained, but all pixel information for the original 
+pixel being overwritten is lost.
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+		
