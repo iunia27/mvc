@@ -6,9 +6,16 @@
 		private $validators = array();
 		
 		/*
-		* Attaches a new validator.
+		* Attaches a new validator at the end of the queue.
 		*/
-		public function attachValidator(IValidator $validator, $breakChainOnFailure = false){
+		public function addValidator(IValidator $validator, $breakChainOnFailure = false){
+		
+		}
+
+		/*
+		* Attaches a new validator at the begining of the queue.
+		*/
+		public function preAppendValidator(IValidator $validator, $breakChainOnFailure = false){
 		
 		}
 		
