@@ -10,6 +10,7 @@
 		*/
 		public function addValidator(IValidator $validator, $breakChainOnFailure = false, $priority = 0){
 			$key = get_class($validator);
+
 			if (!array_key_exists($key, $this->validators)) {
 				if ($priority){
 					$this->preAppendValidator($validator, $breakChainOnFailure);
@@ -25,6 +26,7 @@
 		*/
 		public function preAppendValidator(IValidator $validator, $breakChainOnFailure = false){
 			$key = get_class($validator);
+
 			if (!array_key_exists($key, $this->validators)) {
 				$element = array($key => array('validator' => $validator, 'breakChain' => $breakChainOnFailure));
 				$this->validators = $element + $this->validators;
@@ -63,6 +65,7 @@
 		*/
 		public function dettachValidator($validator){
 			$key = get_class($validator);
+			
 			if (array_key_exists($key, $this->validators)){
 				unset($this->validators[$validatorKeyName]);
 			}

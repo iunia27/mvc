@@ -6,7 +6,8 @@ class DIReflection {
         
     }
 
-    /*     * retrieves controller/service instance based on its dependencies.
+    /* 
+     * retrieves controller/service instance based on its dependencies.
      * $controller -> a variable that stores the name of the class that should be instanced.
      * returns the required service with all its dependencies based on dependency injection tool.
      */
