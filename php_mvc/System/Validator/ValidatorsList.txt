@@ -7,6 +7,9 @@ The application should contain the following validators:
 						  -> contains at least one uppercase letter
 						  -> contains at least one lowercase letter
 						  -> contains at least one digit character
+	-> alnum
+	-> string length
+	-> in array 
 						  
 	The Validator component provides a set of commonly needed validators. It also provides a simple validator 
 chaining mechanism by which multiple validators may be applied to a single datum in a user-defined order.
