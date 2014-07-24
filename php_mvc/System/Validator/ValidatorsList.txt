@@ -1,15 +1,15 @@
 The application should contain the following validators:
-	-> int validator
-	-> float validator
-	-> email validator
-	-> date-time validator
-	-> password validator -> is at least 8 characters in length
+	-> int validator - Iunia
+	-> float validator - Alex
+	-> email validator - Alex
+	-> date-time validator - Iunia
+	-> password validator -> is at least 8 characters in length - Iunia
 						  -> contains at least one uppercase letter
 						  -> contains at least one lowercase letter
 						  -> contains at least one digit character
-	-> alnum
-	-> string length
-	-> in array 
+	-> alnum - Iunia
+	-> string length - Iunia
+	-> in array - Iunia
 						  
 	The Validator component provides a set of commonly needed validators. It also provides a simple validator 
 chaining mechanism by which multiple validators may be applied to a single datum in a user-defined order.
