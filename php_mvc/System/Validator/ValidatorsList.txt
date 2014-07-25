@@ -40,5 +40,5 @@ Zend has the following validators:
 - regex - This validator allows you to validate if a given string conforms a defined regular expression
 - string length - This validator allows you to validate if a given string is between a defined length.  
 
-& also sitemap validators.
+& also sitemap validators
 

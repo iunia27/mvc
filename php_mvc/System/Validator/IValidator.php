@@ -9,6 +9,6 @@
 		/*
 		* The method that will return all failure messages.
 		*/
-		function getMessages($value);
+		function getMessages();
 	}
 ?>

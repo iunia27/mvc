@@ -6,10 +6,11 @@ function __autoload($class_name) {
         'System/',
         'System/Controllers/',
         'System/Db/',
-        'System/Db/Adaptor/PDO/', 
-		'System/View/',
+        'System/Db/Adaptor/PDO/',
+        'System/View/',
         'System/Routes/',
         'System/DependecyResolver/',
+        'System/Validator/',
         'Controllers/',
         'Models/',
     );
