@@ -31,8 +31,6 @@ class FrontController {
         $action = ucfirst($this->route->getActionName());
 		$params = $this->route->getParams();
 
-        echo 'First: Injecting the dependencies through the dependency injection service<br/><br/><br/>';
-
         $cont = $this->getControllerContext($controller);
 		$cont->setActionName($action);
 		$cont->setControllerName($controller);
@@ -40,7 +38,6 @@ class FrontController {
 		$cont->setView(new View($cont));
 
         //Response
-        echo 'Second: The ' . $controller . ', action ' . $action . 'is invoked.<br/><br/><br/>';
         $response = $cont->$action($params);
         echo $response;
     }

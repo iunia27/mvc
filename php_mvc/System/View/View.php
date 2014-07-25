@@ -13,7 +13,6 @@
 			$this->action = $context->getActionName();
 			$this->defaultPath = $this->controller.'/'.$this->action;
 			$this->setPath($this->defaultPath);
-			//array_push($this->path, $this->defaultPath => $this->generateIncludeFilePath($this->defaultPath));
 		}
 		
 		//setters and getters for views

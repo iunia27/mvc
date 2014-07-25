@@ -40,7 +40,6 @@
 	$image = imagecreatetruecolor(400, 300);
 	$col_poly = imagecolorallocate($image, 255, 0, 255);
 	$degrees = 45;
-	imagealphablending($image, true);
 	imagepolygon($image, array(
 							0,   0,
 							100, 200,
@@ -49,7 +48,7 @@
 						3,
 						$col_poly);
 	header('Content-type: image/png');
-	$trans_rotate = imagecolorallocatealpha($image, 0, 255, 255, 5);
+	$trans_rotate = imagecolorallocatealpha($image, 0, 255, 255, 20);
 	$rotate = imagerotate($image, $degrees, $trans_rotate);
 	
 	imagepng($rotate);
@@ -68,8 +67,8 @@
 	imagepng($image);
 */
 
-	//php images with text
-/*
+	//php images with text & fonts
+
 	$image = imagecreate(200, 200);
 	$white = imagecolorallocate($image, 250, 250, 250);
 	$black = imagecolorallocate($image, 0, 0, 0);
@@ -77,10 +76,12 @@
 	imagestring($image, 1, 10, 10, "Font 1: A Black Box", $black);
 	imagestring($image, 2, 10, 30, "Font 10: A Black Box", $black);
 	imagestring($image, 3, 10, 50, "Font 15: A Black Box", $black);
-	imagestring($image, 4, 10, 70, "Font 20: A Black Box", $black);
+	imagestring($image, 100, 10, 70, "Font 25: A Black Box", $black);
 	header("Content-Type: image/png");
 	imagepng($image);
-*/
+	
+	$font = imageloadfont('./04b.gdf');
+
 
 	//php alpha channel
 /*
