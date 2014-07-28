@@ -1,4 +1,5 @@
 <?php
+require_once 'System/Routes/RouterInterface.php';
 
 class Router implements RouterInterface {
 
@@ -58,7 +59,7 @@ class Router implements RouterInterface {
                     $params[$key] = $value;
                 }
             }
-            $this->setParams($_POST['params']);
+            $this->setParams($params);
         }
     }
 
