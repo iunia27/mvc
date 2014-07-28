@@ -2,9 +2,7 @@
 
 class DIReflection {
 
-    public function __construct() {
-        
-    }
+    public function __construct() {}
 
     /* 
      * retrieves controller/service instance based on its dependencies.
@@ -24,8 +22,11 @@ class DIReflection {
 
             if (isset($current->getClass()->name)) {
                 $interfaceToInstanciate = $current->getClass()->name; //get the name of the interface that should be instantiated
-                $concreteInterface = $this->getConcreteClass($interfaceToInstanciate); //gets the name of the class that implements the interface
+                $concreteInterface = $this->getConcreteClass($interfaceToInstanciate); 
+
+                //recursive call in order to instantiate the other dependencies
                 $instance = $this->getControllerContext($concreteInterface);
+
                 array_push($paramsForInstance, $instance);
             }
         }
@@ -33,6 +34,9 @@ class DIReflection {
         return $controllerInstance;
     }
 
+    /*
+    * Builds the concrete class name in order to be instantiate.
+    */
     private function getConcreteClass($interfaceName) {
         return substr($interfaceName, 1);
     }

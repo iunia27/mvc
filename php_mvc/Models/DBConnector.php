@@ -1,6 +1,6 @@
 <?php
 
-	class DBConnector extends Db {
+	class DBConnector extends Db implements IDBConnector {
 		
 		public function __construct(){}
 	

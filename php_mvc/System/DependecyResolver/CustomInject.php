@@ -15,11 +15,7 @@ class CustomInject implements ICustomInject {
                 });
     }
 
-    private function __clone() {
-        
-    }
-
-//Me not like clones! Me smash clones!
+    private function __clone() {}
 
     public static function getInstance() {
         if (!isset(static::$instance)) {

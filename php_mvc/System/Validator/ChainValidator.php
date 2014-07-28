@@ -4,6 +4,7 @@
 		
 		private $messages = array();
 		private $validators = array();
+		private $expectedInterface = 'IValidator';
 		
 		/*
 		* Attaches a new validator at the end of the queue.
@@ -16,7 +17,7 @@
 					$this->preAppendValidator($validator, $breakChainOnFailure);
 				}else{
 					$element = array('validator' => $validator, 'breakChain' => $breakChainOnFailure);
-					$this->validators = array_push_assoc($this->validators, $key, $element);
+					$this->validators = $this->array_push_assoc($this->validators, $key, $element);
 				}
 			}
 		}
@@ -53,17 +54,24 @@
 		*/
 		public function loadValidator($validator){
 			if(is_string($validator)){
-				$validatorInstance = new $validator();
-				$this->addValidator($validatorInstance, false, 0);
+				$validatorInst = new ReflectionClass($validator);
+				$implementedInterfaces = $validatorInst->getInterfaceNames();
+				if (in_array($this->expectedInterface, $implementedInterfaces)){
+					$validatorInstance = new $validator;
+					$this->addValidator($validatorInstance);
+				}
+				else{
+					die("The required validator doesn't exists");
+				}
 			}else{
-				die("The required validator doesn't exists");
+				die("The parameter should be a string value!");
 			}
 		}
 		
 		/*
 		* Detach a validator based on validator name which represents the associative array key.
 		*/
-		public function dettachValidator($validator){
+		public function dettachValidator(IValidator $validator){
 			$key = get_class($validator);
 			
 			if (array_key_exists($key, $this->validators)){
@@ -88,8 +96,25 @@
 		/*
 		* Returns true if and only if $value passes all validations in the chain
 		*/
-		public function isValid($value){
-			
+		public function isValid($valueValidate){
+			//checks each validator and decide if breaking down or not if one of them is not valid.
+			foreach($this->validators as $key => $value){
+				//$value parameter is actually an array containing validator object and the boolean value for 
+				//breaking down if the validation fails.
+				$validator = $value['validator'];
+				$breakOnFailure = $value['breakChain'];
+				$isValid = $validator->isValid($valueValidate);
+				if (!$isValid){
+					//if invalid merges the new error messages in the resulting array.
+					$this->messages = array_merge($this->messages, $validator->getMessages());
+					//if $breakOnFailure is true then the execution stops and the false response is sent.
+					if ($breakOnFailure){
+						return false;
+					}
+				}
+				//if no validator fails or if some validators fails but the execution continues then a specific response is sent back.
+				return count($this->messages) == 0 ? true : false;
+			}
 		}
 		
 		/*
