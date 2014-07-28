@@ -9,7 +9,7 @@
 										  ->getMock();
 		}
 
-		public function buildInstances(){
+		public function checkInstances(){
 
 		}
 

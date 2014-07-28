@@ -21,6 +21,16 @@ class TestController extends BaseController {
 		$this->ReturnView($data, 'Show');
 	}
 
+    public function validate(){
+        $validators = new ChainValidator();
+        $emailValidator = new EmailValidator();
+        $validators->addValidator($emailValidator);
+        $result = $validators->isValid('catalisanalex@yahoo');
+        $messages = $validators->getMessages();
+        foreach($messages as $key => $value){
+            echo "<p>$value</p>";
+        }
+    }
 }
 
 ?>
