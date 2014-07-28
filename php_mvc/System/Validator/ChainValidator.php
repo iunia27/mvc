@@ -116,6 +116,14 @@
 				return count($this->messages) == 0 ? true : false;
 			}
 		}
+
+		/*
+		* Empty the validators array
+		*/
+		public function resetValidators(){
+			$this->validators = array();
+			$this->messages = array();
+		}
 		
 		/*
 		* Return the count of attached validators

@@ -23,9 +23,10 @@ class TestController extends BaseController {
 
     public function validate(){
         $validators = new ChainValidator();
-        $emailValidator = new EmailValidator();
-        $validators->addValidator($emailValidator);
-        $result = $validators->isValid('catalisanalex@yahoo');
+        //$emailValidator = new EmailValidator();
+        $validators->resetValidators();
+        $validators->loadValidator('FloatValidator');
+        $result = $validators->isValid('23.m');
         $messages = $validators->getMessages();
         foreach($messages as $key => $value){
             echo "<p>$value</p>";

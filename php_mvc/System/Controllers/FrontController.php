@@ -20,12 +20,17 @@ class FrontController {
         return static::$instance;
     }
 
+    /*
+    * The entry point method in order to make the dispatch action.
+    */
     public function run() {
         $this->route = new Router($_SERVER['REQUEST_URI'], $_SERVER['REQUEST_METHOD']);
         $this->dispatch();
     }
 
-    // checks for registered router and dispatcher objects, instantiating the default versions of each if none is found
+    /*
+    * Checks for registered router and dispatcher objects, instantiating the default versions of each if none is found.
+    */ 
     private function dispatch() {
         $controller = ucfirst($this->route->getControllerName() . 'Controller');
         $action = ucfirst($this->route->getActionName());
@@ -42,6 +47,9 @@ class FrontController {
         echo $response;
     }
 
+    /*
+    * Gets the Controller Context using dependency injection.
+    */
     private function getControllerContext($controllerName) {
         $ex = new DIReflection();
         return $ex->getControllerContext($controllerName);
