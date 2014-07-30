@@ -1,6 +1,6 @@
 <?php
 
-abstract class DB_Abstract {
+abstract class DbAbstract {
 
     protected $_connection = null;
     protected $config = null;
@@ -87,6 +87,7 @@ abstract class DB_Abstract {
      * @param String $table - the name of the table
      * @param array $array_values - the values that need to be inserted
      * if the array is associative, the keys must correspond to the column names in the table
+     * @return bool true if the insert is successful, false otherwise.
      */
     public function insert($table, array $array_values) {
 
@@ -99,7 +100,7 @@ abstract class DB_Abstract {
         } else {
             $sql = "INSERT INTO " . $table . " VALUES('" . implode("','", $values) . "')";
         }
-        $this->query($sql);
+        return $this->query($sql);
     }
 
     /**
@@ -110,6 +111,7 @@ abstract class DB_Abstract {
      * @param array $where - contains an array of the operands used in the where clause 
      * @param array $whereOp - contains an array of the operators used in the where clause 
      * @throws Exception if the function parameters do not contain correct data
+     * @return bool true if the update is successful, false otherwise.
      */
     public function update($table, array $array_values, $where = '', $whereOp = '') {
         $sql = null;
@@ -130,7 +132,7 @@ abstract class DB_Abstract {
         } else {
             throw new Exception("Update must receive an associative array for setting the values");
         }
-        $this->query($sql);
+        return $this->query($sql);
     }
 
     /**
@@ -139,17 +141,18 @@ abstract class DB_Abstract {
      * @param array $where - contains an array of the operands used in the where clause 
      * @param array $whereOp  - contains an array of the operators used in the where clause 
      * @throws Exception if the function parameters do not contain correct data
+     * @return bool true if the delete is successful, false otherwise.
      */
     public function delete($table, $where = '', $whereOp = '') {
         $sql = "DELETE FROM " . $table;
         $whereString = '';
-        if (is_array($where)) {       // if where is an array
+        if (is_array($where) & !empty($where)) {       // if where is an array
             $whereString = $this->_where($where, $whereOp);
             $sql .=' WHERE ' . $whereString;  // add the where clause
         } elseif ($where != '') {
-            throw new Exception("Update must receive an associative array for the where clause");
+            throw new Exception("Delete must receive an associative array for the where clause");
         }
-        $this->query($sql);
+        return $this->query($sql);
     }
 
     /**
@@ -199,10 +202,8 @@ abstract class DB_Abstract {
         } elseif ($orderBy != '') {
             throw new Exception("Select must receive an array for the orderBy clause");
         }
-        if ($this->exec($sql)===false){
-            return false;
-        }
-        return $this->fetchAll($sql, array());
+
+        return $this->query($sql);
     }
 
     /**
@@ -256,4 +257,6 @@ abstract class DB_Abstract {
     abstract public function prepare($sql);
 
     abstract public function query($sql);
+
+    abstract public function exec($sql);
 }

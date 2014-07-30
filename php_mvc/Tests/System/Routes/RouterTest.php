@@ -11,13 +11,13 @@ class RouterTest extends PHPUnit_Framework_TestCase {
      */
     protected function setUp() {
         $this->setVariables('GET', array("schema" => "http", "controller" => "Test", "action" => "index", "requestType" => "get", 'name' => 'Ghita'), null);
-        $this->router = new Router();  //create a new login
+        $this->router = new Router();  //create a new router
         $this->setVariables('POST', null, array("schema" => "http", "controller" => "Test", "action" => "index", "requestType" => "get", 'name' => 'Ghita'));
-        $this->router = new Router();  //create a new login
+        $this->router = new Router();  //create a new router
         $this->setVariables('GET', array(), null);
-        $this->router = new Router();  //create a new login
-        $this->setVariables('GET', array("schema" => "http","requestType" => "get"), null);
-        $this->router = new Router();  //create a new login
+        $this->router = new Router();  //create a new router
+        $this->setVariables('GET', array("schema" => "http", "requestType" => "get"), null);
+        $this->router = new Router();  //create a new router
         $class = get_class($this->router);
         $this->assertEquals($class, "Router");
     }
@@ -35,14 +35,16 @@ class RouterTest extends PHPUnit_Framework_TestCase {
         $_POST = $post;
     }
 
-    public function setUpProvider() {
-        return array(
-            array('GET', array("schema" => "http", "controller" => "Test", "action" => "index", "requestType" => "get", 'name' => 'Ghita'), null),
-            array('POST', null, array("schema" => "http", "controller" => "Test", "action" => "index", "requestType" => "get", 'name' => 'Ghita')),
-            array('GET', null, array("schema" => "http","requestType" => "get", 'name' => 'Ghita')),
-            array('GET', array(), null),
-        );
-    }
+    /*
+      public function setUpProvider() {
+      return array(
+      array('GET', array("schema" => "http", "controller" => "Test", "action" => "index", "requestType" => "get", 'name' => 'Ghita'), null),
+      array('POST', null, array("schema" => "http", "controller" => "Test", "action" => "index", "requestType" => "get", 'name' => 'Ghita')),
+      array('GET', null, array("schema" => "http","requestType" => "get", 'name' => 'Ghita')),
+      array('GET', array(), null),
+      );
+      }
+     */
 
     public function testCreateRoute() {
         
