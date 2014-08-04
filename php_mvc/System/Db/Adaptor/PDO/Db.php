@@ -1,6 +1,8 @@
 <?php
 
-class Db extends DB_Abstract {
+require_once 'System/Db/DbAbstract.php';
+
+class Db extends DbAbstract {
 
     /**
      * Creates a connection to the database
@@ -65,6 +67,7 @@ class Db extends DB_Abstract {
      * Returns true if the query succeeded, false otherwise
      */
     public function query($sql, $bind = array()) {
+        $this->_connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         try {
             $this->_connect();
             $stmt = $this->_connection->prepare($sql);    //prepare statement
@@ -80,7 +83,7 @@ class Db extends DB_Abstract {
      * @throws Exception if the execution is not successful.
      */
     public function exec($sql) {
-
+        $this->_connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         try {
             $this->_connection->exec($sql);
         } catch (PDOException $e) {
