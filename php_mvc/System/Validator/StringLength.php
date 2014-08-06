@@ -1,5 +1,7 @@
 <?php
 
+require_once 'IValidator.php';  //only for Unit Tests
+
 class StringLength implements IValidator {
 
     protected $message = array();
@@ -68,6 +70,8 @@ class StringLength implements IValidator {
             $this->message[] = 'The provided string is too long.';
             return false;
         }
+        
+        return true;
     }
 
     /**

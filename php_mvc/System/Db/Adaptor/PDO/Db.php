@@ -86,9 +86,11 @@ class Db extends DbAbstract {
         $this->_connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         try {
             $this->_connection->exec($sql);
+            return true;
         } catch (PDOException $e) {
             throw new Exception($e->getMessage(), $e->getCode(), $e);
         }
+        return false;
     }
 
 }

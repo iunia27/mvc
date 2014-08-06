@@ -1,5 +1,7 @@
 <?php
 
+require_once 'IValidator.php';  //only for Unit Tests
+
 class Password implements IValidator {
 
     private $message = null;

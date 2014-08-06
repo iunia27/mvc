@@ -1,5 +1,7 @@
 <?php
 
+require_once 'IValidator.php';  //only for Unit Tests
+
 class AlNum implements IValidator {
 
     private $message = null;
@@ -14,9 +16,7 @@ class AlNum implements IValidator {
             $this->message = "The inserted value is an empty string.";
             return false;
         }
-
-        $pattern = '/[^a-zA-Z0-9]/';  //the alphanumeric pattern
-
+        $pattern = '/^[a-zA-Z0-9]+$/';  //the alphanumeric pattern
         if (preg_match($pattern, $value) === 1) {  //verify if $value respects the pattern
             return true;
         } else {

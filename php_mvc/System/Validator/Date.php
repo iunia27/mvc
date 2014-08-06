@@ -1,5 +1,7 @@
 <?php
 
+require_once 'IValidator.php';  //only for Unit Tests
+
 class Date implements IValidator {
 
     private $message = null;
@@ -27,6 +29,7 @@ class Date implements IValidator {
 
             return false;
         }
+        return true;
     }
 
     /**
