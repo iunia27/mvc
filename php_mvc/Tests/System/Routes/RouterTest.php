@@ -1,6 +1,6 @@
 <?php
 
-require_once 'System/Routes/Router.php';
+include_once 'System/Routes/Router.php';
 
 class RouterTest extends PHPUnit_Framework_TestCase {
 

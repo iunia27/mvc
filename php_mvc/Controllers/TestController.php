@@ -5,9 +5,9 @@ class TestController extends BaseController {
     private $itest;
     private $idbs;
 
-    public function __construct(ITest $itest, IDBService $idbs) {
-        $this->itest = $itest;
-        $this->idbs = $idbs;
+    public function __construct() {
+        $this->itest = new Test();
+        $this->idbs = new DBService();;
     }
 
     public function index() {

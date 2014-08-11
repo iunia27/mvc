@@ -43,8 +43,7 @@ class FrontController {
 		$cont->setView(new View($cont));
 
         //Response
-        $response = $cont->$action($params);
-        echo $response;
+        $cont->$action();
     }
 
     /*

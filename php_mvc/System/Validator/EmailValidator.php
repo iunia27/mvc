@@ -1,7 +1,9 @@
 <?php
+	require_once 'IValidator.php';  //only for Unit Tests
+
 	class EmailValidator implements IValidator{
 
-		private $generalErrorMessages = array( 'INVALID' => 'The e-mail address must be a string!',
+		private $generalErrorMessages = array( 'INVALID' => 'The e-mail address you entered is not in a correct format!',
 								  			  'INVALID_FORMAT' => 'The e-mail address you entered is not in a correct format!',
 								  			 );
 

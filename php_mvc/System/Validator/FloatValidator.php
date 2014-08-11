@@ -1,4 +1,5 @@
 <?php
+	require_once 'IValidator.php';  //only for Unit Tests
 	class FloatValidator implements IValidator{
 
 		private $generalErrorMessages = array( 
