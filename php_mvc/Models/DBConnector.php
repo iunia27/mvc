@@ -1,6 +1,8 @@
 <?php
 
-	class DBConnector extends Db implements IDBConnector {
+	require_once 'Models/IDBConnector.php';
+
+	class DBConnector implements IDBConnector {
 		
 		public function __construct(){}
 	

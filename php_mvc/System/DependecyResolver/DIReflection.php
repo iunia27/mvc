@@ -1,4 +1,11 @@
 <?php
+
+    require_once 'Controllers/TestController.php';
+    require_once 'Controllers/TstController.php';
+    require_once 'Models/Test.php';
+    require_once 'Models/DBConnector.php';
+    require_once 'Models/DBService.php';
+
 class DIReflection {
 
     public function __construct() {}

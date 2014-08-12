@@ -18,14 +18,13 @@
 		public function testValid($value){
 			$instance = $this->reflectionInstance->getControllerContext($value);
 			$contrClass = get_class($instance);
-			print('tttttttttttttttttttttttttttttttttttttttttttttttt '.$contrClass.' ttttttttttttt');
 	        $this->assertEquals($contrClass, $value);
 		}
 
 		public function validData(){
 			return array(array('TestController'),
 						 array('TstController')
-					);
+						);
 		}
 
 		/**
@@ -33,11 +32,11 @@
 	     */
 		public function testInvalid($value){
 			$instance = $this->reflectionInstance->getControllerContext($value);
-	        $this->assertEquals($instance, null);
+	        $this->assertNull($instance);
 		}
 
 		public function invalidData(){
-			return array(array('test'),
+			return array(array('testee'),
 						 array('controller'),
 						 array('another')
 			);		

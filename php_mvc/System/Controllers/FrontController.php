@@ -43,6 +43,7 @@ class FrontController {
 		$cont->setView(new View($cont));
 
         //Response
+        $cont = $this->getControllerContext('Test');
         $cont->$action();
     }
 

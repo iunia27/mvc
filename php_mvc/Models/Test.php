@@ -1,5 +1,7 @@
 <?php
-	
+
+	require_once 'Models/ITest.php';
+
 	class Test implements ITest{
 		private $idbc;
 	

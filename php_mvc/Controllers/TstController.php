@@ -1,5 +1,7 @@
 <?php
 
+require_once 'System/Controllers/BaseController.php';
+
 class TstController extends BaseController {
 
     public function __construct() {

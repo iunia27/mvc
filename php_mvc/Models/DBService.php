@@ -1,5 +1,7 @@
 <?php
 	
+	require_once 'Models/IDBService.php';
+
 	class DBService implements IDBService{
 		public function __construct(){}
 	
